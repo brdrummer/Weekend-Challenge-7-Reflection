@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+
 
 class FormCard extends Component {
 // Set local state for rating
@@ -36,13 +36,11 @@ class FormCard extends Component {
               {this.props.title}
               <input type="text" value={this.state.rating} onChange={this.handleChange} />
             </label>
-            <Button
-              variant="contained"
-              color="primary"
-              type="button"
-              onClick={this.updateAnswers(this.props.category)}
-            >
-            </Button>
+            <button 
+              
+            onClick={this.updateAnswers(this.props.category)}> Next
+            
+            </button>
         </div>
     );
   }

@@ -19,7 +19,7 @@ class App extends Component {
           <br/>
           {/* // First Route */}
           <Route exact path="/" render={() => (
-            <FormCard
+            <Form
               title="How are you feeling today?"
               category="feeling"
               nextUrl="/2"
@@ -27,7 +27,7 @@ class App extends Component {
           />
             {/* // Second Route */}
           <Route exact path="/2" render={() => (
-            <FormCard
+            <Form
               title="How well are you understanding the content?"
               category="understanding"
               nextUrl="/3"
@@ -35,7 +35,7 @@ class App extends Component {
           />
               {/* // Third Route */}
           <Route exact path="/3" render={() => (
-            <FormCard
+            <Form
               title="How well are you being supported?"
               category="support"
               nextUrl="/4"
@@ -43,7 +43,7 @@ class App extends Component {
           />
            {/* // Fourth Route */}
           <Route exact path="/4" render={() => (
-            <FormCard
+            <Form
               title="Any comments you want to leave?"
               category="comment"
               nextUrl="/5"
@@ -52,8 +52,8 @@ class App extends Component {
           />
             {/* // Fifth Route */}
           <Route exact path="/5" render={() => (
-            <FormCard
-              title="Success!!!"
+            <Form
+              title="Success!!!, Click next to submit your feedback."
               nextUrl="/"
             />)}
           />
