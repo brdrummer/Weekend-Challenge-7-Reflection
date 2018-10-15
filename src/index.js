@@ -6,25 +6,30 @@ import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 
-
-const feedback = (state = [], action) => {
+const feedback = (state = {}, action) => {
     switch (action.type) {
-        case 'SET_FEEDBACK':
-            return [...state, action.payload]
+        case 'UPDATE_ANSWERS':
+            return {
+                ...state,
+                [action.payload.propertyName]: action.payload.rating
+            };
         default:
             return state;
     }
 }
 
-
 const allReducers = combineReducers({
-    feedback
-})
+    feedback,
+});
 
 const store = createStore(
     allReducers,
-    applyMiddleware(logger),
-)
+    applyMiddleware(logger)
+);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+registerServiceWorker();
+
+
+
 

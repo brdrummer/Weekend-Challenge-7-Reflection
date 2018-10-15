@@ -1,28 +1,46 @@
+// CONSTANTS/VARIABLES
 const express = require('express');
-const router = express.Router();
+const pool = require('../modules/pool');
+let router = express.Router();
 
-const mongoose = require('mongoose');
+// GET
+router.get('/', (req, res) => {
 
-const Schema = mongoose.Schema;
+    pool.query('SELECT * FROM "feedback"')
+        .then((results) => {
+            console.log(results.rows);
+            res.send(results.rows);
+        }).catch((error) => {
+            console.log('error with SQL select for feedback', error);
+            res.sendStatus(500);
+        });
+}); // END HOME GET
 
-// Mongoose Schema
-const FeedbackSchema = new Schema({
-    feelings: { type: Number, required: true },
-    content: { type: Number, required: true },
-    support:{ type: Number, required: true },
-    comments: { type: String, required: true },
-});
+// RENTAL/SALE GET
+// router.get('/:type', (req, res) => {
 
-const Feedback = mongoose.model('feedback', FeedbackSchema);
+//     pool.query('SELECT * FROM "listings" WHERE "type" = $1;', [req.params.type])
+//         .then((results) => {
+//             console.log(results.rows);
+//             res.send(results.rows);
+//         }).catch((error) => {
+//             console.log('error with SQL select for listings', error);
+//             res.sendStatus(500);
+//         });
+// }); //End RENTAL/SALE GET
 
-// router.get('/', (req, res) => {
-//     console.log('GET /api/pizza');
-//     Feedback.find({}).then((result) => {
-//         res.send(result);
-//     }).catch((error) => {
-//         console.log('Error GET /api/pizza', error)
-//         res.sendStatus(500);
-//     });
-// })
+// POST
+router.post('/', (req, res) => {
+    pool.query(`INSERT INTO "feedback" ("feeling", "understanding", "support", "comments")
+                VALUES ($1, $2, $3, $4);`, [req.body.feeling, req.body.understanding, req.body.support, req.body.comments])
+        .then(() => {
+            res.sendStatus(201);
+        }).catch((error) => {
+            console.log('error with SQL insert for feedbackPOST', error);
+            res.sendStatus(500);
+        });
+}); //End POST 
+
+
 
 module.exports = router;

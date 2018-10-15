@@ -1,46 +1,70 @@
 import React, { Component } from 'react';
 import './App.css';
-import Content from '../Content/Content.js';
-import Support from '../Support/Support.js';
-import Comments from '../Comments/Comments.js';
-import Thanks from '../Thanks/Thanks.js';
-import Admin from '../Admin/Admin.js';
 import axios from 'axios';
 import {HashRouter as Router, Route, Link} from "react-router-dom";
 import { connect } from 'react-redux';
+import Form from '../Form/Form';
+
 class App extends Component {
+
   render() {
     return (
-      <Router> 
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Feedback!</h1>
-          <h4><i>Don't forget it!</i></h4>
-        </header>
-         {/* Temp navbar for dev mode, will be replaced by series of next buttons */}
-         <ul>
-          <li><Link to='/content'>Content</Link></li>
-          <li><Link to='/support'>Support</Link></li>
-          <li><Link to='/comments'>Comments</Link></li>
-          <li><Link to='/thanks'>Thank You!</Link></li>
-          <li><Link to='/admin'>Admin</Link></li>
-          </ul>
-          <Route exact path='/content' component={Content}/>
-          <Route exact path='/support' component={Support}/>
-          <Route exact path='/comments' component={Comments}/>
-          <Route exact path='/thanks' component={Thanks}/>
-          <Route exact path='/admin' component={Admin}/>
-        <br/>
-      </div>
+      <Router>
+         {/* // Home  */}
+        <div className="App">
+          <header className="App-header">
+            <h1 className="App-title">Feedback!</h1>
+            <h4><i>Don't forget it!</i></h4>
+          </header>
+          <br/>
+          {/* // First Route */}
+          <Route exact path="/" render={() => (
+            <FormCard
+              title="How are you feeling today?"
+              category="feeling"
+              nextUrl="/2"
+            />)}
+          />
+            {/* // Second Route */}
+          <Route exact path="/2" render={() => (
+            <FormCard
+              title="How well are you understanding the content?"
+              category="understanding"
+              nextUrl="/3"
+            />)}
+          />
+              {/* // Third Route */}
+          <Route exact path="/3" render={() => (
+            <FormCard
+              title="How well are you being supported?"
+              category="support"
+              nextUrl="/4"
+            />)}
+          />
+           {/* // Fourth Route */}
+          <Route exact path="/4" render={() => (
+            <FormCard
+              title="Any comments you want to leave?"
+              category="comment"
+              nextUrl="/5"
+              isLastQuestion={true}
+            />)}
+          />
+            {/* // Fifth Route */}
+          <Route exact path="/5" render={() => (
+            <FormCard
+              title="Success!!!"
+              nextUrl="/"
+            />)}
+          />
+        </div>
       </Router>
     );
   }
 }
 
-
-const mapStateToProps = state => ({
-  feedback: state.feedback
-
-})
+const mapStateToProps = reduxState => ({
+  reduxState,
+});
 
 export default connect(mapStateToProps)(App);
